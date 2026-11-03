@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#070b1f" />
+  <title>Gravity Flip: Escape Dimension</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="game-shell">
+    <section class="game-card" aria-label="Gravity Flip game">
+      <header class="topbar">
+        <div class="brand"><span class="brand-mark">↕</span><span>GRAVITY FLIP</span></div>
+        <div class="status-pill"><span class="status-dot"></span><span id="statusText">SYSTEM READY</span></div>
+      </header>
+      <div class="canvas-wrap">
+        <canvas id="gameCanvas" width="1100" height="650" aria-label="Game canvas"></canvas>
+        <div class="hud" id="hud" hidden>
+          <div class="hud-block"><span class="hud-label">SCORE</span><strong id="scoreValue">00000</strong></div>
+          <div class="hud-block crystal-count"><span class="hud-label">CRYSTALS</span><strong id="crystalValue">0</strong></div>
+          <div class="gravity-readout"><span class="hud-label">GRAVITY</span><strong id="gravityValue">FLOOR ↓</strong><div class="gravity-progress"><i id="gravityProgress"></i></div></div>
+          <div class="hud-block lives"><span class="hud-label">STABILITY</span><strong id="livesValue">♥ ♥ ♥</strong></div>
+        </div>
+        <div class="screen-overlay" id="startScreen">
+          <div class="overlay-content">
+            <div class="eyebrow">LABORATORY // SECTOR 15</div>
+            <h1>ESCAPE<br /><em>DIMENSION</em></h1>
+            <p class="tagline">Gravity is malfunctioning. Your exit is above you.<br />Collect the crystals. Survive the flip.</p>
+            <button id="startButton" class="primary-button">INITIALIZE ESCAPE <span>→</span></button>
+            <div class="controls-hint"><span>← →</span> MOVE <span>SPACE</span> FLIP GRAVITY <span>P</span> PAUSE</div>
+          </div>
+        </div>
+        <div class="screen-overlay" id="pauseScreen" hidden>
+          <div class="overlay-content small"><div class="eyebrow">SYSTEM PAUSED</div><h2>STABILIZE YOURSELF</h2><p>Press <b>P</b> to resume the experiment.</p><button id="resumeButton" class="primary-button">RESUME <span>→</span></button></div>
+        </div>
+        <div class="screen-overlay" id="gameOverScreen" hidden>
+          <div class="overlay-content small"><div class="eyebrow">SIGNAL LOST // RUN TERMINATED</div><h2>THE DIMENSION<br /><em>COLLAPSED</em></h2><p>Final score <b id="finalScore">0</b> · Crystals recovered <b id="finalCrystals">0</b></p><button id="restartButton" class="primary-button">RESTART RUN <span>↻</span></button></div>
+        </div>
+      </div>
+      <footer class="footer"><span>GRAVITY FLIP: ESCAPE DIMENSION</span><span>EXPERIMENT 15-A // <b>LIVE</b></span></footer>
+    </section>
+  </main>
+  <script src="game.js"></script>
+</body>
+</html>
