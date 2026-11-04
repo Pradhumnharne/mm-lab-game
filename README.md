@@ -1,6 +1,17 @@
 # Gravity Flip: Escape Dimension
 
-A customizable 2D physics-arcade game for Multimedia Systems Lab Test 2. It is built with HTML, CSS, and JavaScript Canvas, so it runs as a static site and can be deployed on Vercel.
+A customizable 2D physics-arcade game for Multimedia Systems Lab Test 2. The core game is implemented in Python with Pygame. A matching HTML/CSS/JavaScript Canvas edition is also included for browser play and Vercel deployment.
+
+## Python version
+
+Install Python 3.10+ and run:
+
+```bash
+pip install -r requirements.txt
+python game.py
+```
+
+The Python version is the desktop implementation used for the core gameplay logic. It uses only locally drawn graphics and Pygame.
 
 ## Rules
 
