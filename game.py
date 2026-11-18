@@ -7,6 +7,7 @@ Install the only dependency with: pip install pygame
 import random
 import sys
 from dataclasses import dataclass
+from typing import List, Optional, Tuple
 
 import pygame
 
@@ -61,13 +62,13 @@ class GravityFlip:
         self.lives = 3
         self.invulnerable = 0.0
         self.objects: list[FallingObject] = []
-        self.particles: list[list[float | tuple[int, int, int]]] = []
+        self.particles: List[list] = []
         for i in range(4):
             self.spawn("crystal", 80 + i * 245, 150 + (i % 2) * 100)
         for i in range(3):
             self.spawn("hazard", 150 + i * 330, 270 + (i % 2) * 150)
 
-    def spawn(self, kind: str, x: float | None = None, y: float | None = None) -> None:
+    def spawn(self, kind: str, x: Optional[float] = None, y: Optional[float] = None) -> None:
         size = 20 if kind == "crystal" else 32
         self.objects.append(FallingObject(kind, x if x is not None else random.randint(30, WIDTH - 62), y if y is not None else -45, 70 + random.random() * 45 + self.elapsed * 1.8, size))
 
@@ -79,7 +80,7 @@ class GravityFlip:
         self.player_velocity.y = self.gravity * 120
         self.burst(self.player.center, CYAN, 15)
 
-    def burst(self, position: tuple[int, int], color: tuple[int, int, int], amount: int) -> None:
+    def burst(self, position: Tuple[int, int], color: Tuple[int, int, int], amount: int) -> None:
         for _ in range(amount):
             self.particles.append([float(position[0]), float(position[1]), (random.uniform(-2.5, 2.5), random.uniform(-2.5, 2.5)), 0.5 + random.random() * 0.5, color])
 
@@ -138,7 +139,7 @@ class GravityFlip:
             if self.lives <= 0:
                 self.state = "game_over"
 
-    def draw_text(self, text: str, position: tuple[int, int], font: pygame.font.Font, color: tuple[int, int, int] = INK, center: bool = False) -> None:
+    def draw_text(self, text: str, position: Tuple[int, int], font: pygame.font.Font, color: Tuple[int, int, int] = INK, center: bool = False) -> None:
         image = font.render(text, True, color)
         rect = image.get_rect(center=position) if center else image.get_rect(topleft=position)
         self.screen.blit(image, rect)
@@ -185,9 +186,9 @@ class GravityFlip:
     def draw_hud(self) -> None:
         self.draw_text(f"SCORE  {self.score:05d}", (24, 15), self.font, INK)
         self.draw_text(f"CRYSTALS  {self.crystals}  x{self.combo}" if self.combo > 1 else f"CRYSTALS  {self.crystals}", (190, 15), self.font, INK)
-        gravity_text = "FLOOR ↓" if self.gravity == 1 else "CEILING ↑"
+        gravity_text = "FLOOR DOWN" if self.gravity == 1 else "CEILING UP"
         self.draw_text(f"GRAVITY  {gravity_text}", (WIDTH - 300, 15), self.font, CYAN)
-        self.draw_text("♥ " * self.lives, (WIDTH - 115, 15), self.font, PINK)
+        self.draw_text("LIVES " + "# " * self.lives, (WIDTH - 115, 15), self.font, PINK)
 
     def draw_overlay(self, title: str, subtitle: str, button: str) -> None:
         shade = pygame.Surface((WIDTH, HEIGHT), pygame.SRCALPHA)
@@ -198,7 +199,7 @@ class GravityFlip:
         self.draw_text(subtitle, (WIDTH // 2, 325), self.font, MUTED, True)
         pygame.draw.rect(self.screen, CYAN, (WIDTH // 2 - 125, 370, 250, 52))
         self.draw_text(button, (WIDTH // 2, 396), self.font, (5, 15, 28), True)
-        self.draw_text("← → / A D  MOVE     SPACE  FLIP GRAVITY     P  PAUSE", (WIDTH // 2, 470), self.font_small, MUTED, True)
+        self.draw_text("LEFT / RIGHT / A / D MOVE     SPACE FLIP     P PAUSE", (WIDTH // 2, 470), self.font_small, MUTED, True)
 
     def draw(self) -> None:
         self.draw_world()
